@@ -12,8 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('books', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->id(); // 主鍵
+            $table->string('name'); // 書名
+            $table->text('description'); // 書籍描述
+            $table->string('author'); // 作者
+            $table->string('isbn')->unique(); // ISBN 編號，唯一
+            $table->string('publisher'); // 出版社
+            $table->timestamps(); // 建立與更新時間
         });
     }
 
