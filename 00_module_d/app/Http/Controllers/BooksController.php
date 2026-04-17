@@ -80,6 +80,12 @@ class BooksController extends Controller
      */
     public function destroy(Books $books)
     {
-        //
+        // 確保有 use App\Models\Books; 的引用
+        $book = Books::where('isbn', '456')->first(); // 根據 ISBN 找到 456 的書籍資料
+        if ($book) {
+            $book->delete();
+            return '書籍已刪除';
+        }
+        return '沒有找到書籍資料';
     }
 }
