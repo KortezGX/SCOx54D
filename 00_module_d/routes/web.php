@@ -19,7 +19,7 @@ Route::get('/', function () {
 });
 
 // Route::get('/books/add', [BooksController::class, 'store']); // 新增書籍的路由
-Route::get('/books/update', [BooksController::class, 'update']); // 更新書籍的路由
+// Route::get('/books/update', [BooksController::class, 'update']); // 更新書籍的路由
 // Route::get('/books/delete', [BooksController::class, 'destroy']); // 刪除書籍的路由
 // Route::get('/books/list', [BooksController::class, 'index']); // 列出書籍的路由
 
@@ -29,6 +29,9 @@ Route::prefix('00_module_d')->group(function () {
 
         Route::get('/new', [BooksController::class, 'create'])->name('create'); // 顯示新增書籍表單的路由 books.create
         Route::post('/', [BooksController::class, 'store'])->name('store'); // 處理新增書籍表單提交的路由 books.store
+
+        Route::get('/{book}/edit', [BooksController::class, 'edit'])->name('edit'); // 顯示編輯書籍表單的路由 books.edit
+        Route::put('/{book}', [BooksController::class, 'update'])->name('update'); // 處理編輯書籍表單提交的路由 books.update
 
         Route::delete('/{book}', [BooksController::class, 'destroy'])->name('destroy'); // 刪除書籍的路由 books.destroy
     });

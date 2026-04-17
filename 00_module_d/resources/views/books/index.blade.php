@@ -28,6 +28,7 @@
                         <td>{{ $book->publisher }}</td>
                         <td>{{ $book->description }}</td>
                         <td>
+                            <a href="{{ route('books.edit', $book) }}" class="btn btn-warning btn-sm me-1">編輯</a>
                             <form action="{{ route('books.destroy', $book) }}" method="POST" style="display:inline;" onsubmit="return confirm('確定要刪除此書籍嗎？');">
                                 @csrf
                                 @method('DELETE')

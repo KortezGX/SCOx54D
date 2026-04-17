@@ -64,28 +64,39 @@ class BooksController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Books $books)
+    public function edit(Books $book)
     {
-        //
+        return view('books.edit', ['book' => $book]); // 顯示 Resource 目錄下的 books/edit.blade.php view，並傳遞 book 變數
     }
 
     /**
      * Update the specified resource in storage.
+     * 確保有 use App\Models\Books; 的引用
      */
-    public function update(Request $request, Books $books)
+    public function update(Request $request, Books $book)
     {
-        // 確保有 use App\Models\Books; 的引用
-        $book = Books::first(); // 取得第一筆書籍資料
-        if ($book) {
-            $book->name = '更新後的書籍名稱';
-            $book->description = '這是一筆由 BooksController 更新的測試資料。';
-            $book->author = '更新後的作者';
-            $book->isbn = '456';
-            $book->publisher = '更新後的出版社';
-            $book->save();
-            return '書籍已更新';
-        }
-        return '沒有找到書籍資料';
+        // day 1 的練習(模擬更新書籍資料)
+        // $book = Books::first(); // 取得第一筆書籍資料
+        // if ($book) {
+        //     $book->name = '更新後的書籍名稱';
+        //     $book->description = '這是一筆由 BooksController 更新的測試資料。';
+        //     $book->author = '更新後的作者';
+        //     $book->isbn = '456';
+        //     $book->publisher = '更新後的出版社';
+        //     $book->save();
+        //     return '書籍已更新';
+        // }
+        // return '沒有找到書籍資料';
+
+        // day 2 的練習(使用 Put 請求來更新書籍資料)
+        $book->name = $request->input('name');
+        $book->description = $request->input('description');
+        $book->author = $request->input('author');
+        $book->isbn = $request->input('isbn');
+        $book->publisher = $request->input('publisher');
+        $book->save();
+
+        return redirect()->route('books.index', [], 302)->with('success', '書籍已更新'); // 重定向到 books.index 路由，並帶上成功訊息
     }
 
     /**
@@ -104,6 +115,7 @@ class BooksController extends Controller
 
         // day 2 的練習(使用 Delete 請求來刪除書籍資料)
         $book->delete();
+
         return redirect()->route('books.index', [], 302)->with('success', '書籍已刪除'); // 重定向到 books.index 路由，並帶上成功訊息
     }
 }
