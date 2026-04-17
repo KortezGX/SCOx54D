@@ -8,6 +8,20 @@
 </head>
 <body>
     <div class="container">
+        {{-- 檢查 Session 裡有沒有名為 success 的快閃資料 --}}
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        {{-- 檢查 Session 裡有沒有名為 error 的快閃資料 --}}
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
         @yield('content')
     </div>
 </body>

@@ -22,24 +22,35 @@ class BooksController extends Controller
      */
     public function create()
     {
-        //
+        return view('books.create'); // 顯示 Resource 目錄下的 books/create.blade.php view
     }
 
     /**
      * Store a newly created resource in storage.
+     * 確保有 use App\Models\Books; 的引用
      */
     public function store(Request $request)
     {
-        // 確保有 use App\Models\Books; 的引用
+        // day 1 的練習(模擬新增書籍資料)
+        // $book = new Books();
+        // $book->name = '測試書籍';
+        // $book->description = '這是一筆由 BooksController 新增的測試資料。';
+        // $book->author = '範例作者';
+        // $book->isbn = '123';
+        // $book->publisher = '範例出版社';
+        // $book->save();
+        // return '書籍已建立';
+
+        // day 2 的練習(使用 Post 請求來新增書籍資料)
         $book = new Books();
-        $book->name = '測試書籍';
-        $book->description = '這是一筆由 BooksController 新增的測試資料。';
-        $book->author = '範例作者';
-        $book->isbn = '123';
-        $book->publisher = '範例出版社';
+        $book->name = $request->input('name');
+        $book->description = $request->input('description');
+        $book->author = $request->input('author');
+        $book->isbn = $request->input('isbn');
+        $book->publisher = $request->input('publisher');
         $book->save();
 
-        return '書籍已建立';
+        return redirect()->route('books.index', [], 302)->with('success', '書籍已建立'); // 重定向到 books.index 路由，並帶上成功訊息
     }
 
     /**
