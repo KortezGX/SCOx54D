@@ -21,4 +21,10 @@ Route::get('/', function () {
 Route::get('/books/add', [BooksController::class, 'store']); // 新增書籍的路由
 Route::get('/books/update', [BooksController::class, 'update']); // 更新書籍的路由
 Route::get('/books/delete', [BooksController::class, 'destroy']); // 刪除書籍的路由
-Route::get('/books/list', [BooksController::class, 'index']); // 列出書籍的路由
+// Route::get('/books/list', [BooksController::class, 'index']); // 列出書籍的路由
+
+Route::prefix('00_module_d')->group(function () {
+    Route::prefix('books')->name('books.')->group(function () {
+        Route::get('/', [BooksController::class, 'index'])->name('index'); // 列出所有書籍頁面的路由 books.index
+    });
+});

@@ -14,7 +14,7 @@ class BooksController extends Controller
     {
         // 確保有 use App\Models\Books; 的引用
         $books = Books::all(); // 取得所有書籍資料
-        return $books;
+        return view('books.index', ['books' => $books]); // 設置 books 變數傳遞給 view
     }
 
     /**
