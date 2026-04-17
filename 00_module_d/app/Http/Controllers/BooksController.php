@@ -61,7 +61,18 @@ class BooksController extends Controller
      */
     public function update(Request $request, Books $books)
     {
-        //
+        // 確保有 use App\Models\Books; 的引用
+        $book = Books::first(); // 取得第一筆書籍資料
+        if ($book) {
+            $book->name = '更新後的書籍名稱';
+            $book->description = '這是一筆由 BooksController 更新的測試資料。';
+            $book->author = '更新後的作者';
+            $book->isbn = '456';
+            $book->publisher = '更新後的出版社';
+            $book->save();
+            return '書籍已更新';
+        }
+        return '沒有找到書籍資料';
     }
 
     /**

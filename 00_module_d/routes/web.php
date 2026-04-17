@@ -19,4 +19,4 @@ Route::get('/', function () {
 });
 
 Route::get('/books/add', [BooksController::class, 'store']); // 新增書籍的路由
-
+Route::get('/books/update', [BooksController::class, 'update']); // 更新書籍的路由
