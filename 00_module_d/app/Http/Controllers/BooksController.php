@@ -56,9 +56,9 @@ class BooksController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Books $books)
+    public function show(Books $book)
     {
-        //
+        return view('books.detial', ['book' => $book]); // 顯示 Resource 目錄下的 books/detial.blade.php view，並傳遞 book 變數
     }
 
     /**

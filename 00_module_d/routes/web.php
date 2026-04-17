@@ -34,5 +34,7 @@ Route::prefix('00_module_d')->group(function () {
         Route::put('/{book}', [BooksController::class, 'update'])->name('update'); // 處理編輯書籍表單提交的路由 books.update
 
         Route::delete('/{book}', [BooksController::class, 'destroy'])->name('destroy'); // 刪除書籍的路由 books.destroy
+
+        Route::get('/{book:isbn}', [BooksController::class, 'show'])->name('show'); // 顯示單一書籍詳細資訊的路由 books.show
     });
 });
