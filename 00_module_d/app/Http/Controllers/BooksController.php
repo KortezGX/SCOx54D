@@ -90,15 +90,20 @@ class BooksController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * 確保有 use App\Models\Books; 的引用
      */
-    public function destroy(Books $books)
+    public function destroy(Books $book)
     {
-        // 確保有 use App\Models\Books; 的引用
-        $book = Books::where('isbn', '456')->first(); // 根據 ISBN 找到 456 的書籍資料
-        if ($book) {
-            $book->delete();
-            return '書籍已刪除';
-        }
-        return '沒有找到書籍資料';
+        // day 1 的練習(模擬刪除書籍資料)
+        // $book = Books::where('isbn', '456')->first(); // 根據 ISBN 找到 456 的書籍資料
+        // if ($book) {
+        //     $book->delete();
+        //     return '書籍已刪除';
+        // }
+        // return '沒有找到書籍資料';
+
+        // day 2 的練習(使用 Delete 請求來刪除書籍資料)
+        $book->delete();
+        return redirect()->route('books.index', [], 302)->with('success', '書籍已刪除'); // 重定向到 books.index 路由，並帶上成功訊息
     }
 }
