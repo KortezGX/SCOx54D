@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\BooksController;
+// 添加 AuthController 的命名空間
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,3 +40,10 @@ Route::prefix('00_module_d')->group(function () {
         Route::get('/{book:isbn}', [BooksController::class, 'show'])->name('show'); // 顯示單一書籍詳細資訊的路由 books.show
     });
 });
+
+Route::prefix('login')->name('login.')->group(function () {
+    Route::get('/', [App\Http\Controllers\AuthController::class, 'show'])->name('show'); // 顯示登入頁面的路由 login.show
+    Route::post('/', [App\Http\Controllers\AuthController::class, 'login'])->name('submit'); // 處理登入表單提交的路由 login.submit
+});
+
+Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout'); // 處理登出功能的路由 logout
