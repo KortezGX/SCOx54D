@@ -41,9 +41,13 @@ Route::prefix('00_module_d')->group(function () {
     });
 });
 
-Route::prefix('login')->name('login.')->group(function () {
-    Route::get('/', [App\Http\Controllers\AuthController::class, 'show'])->name('show'); // 顯示登入頁面的路由 login.show
-    Route::post('/', [App\Http\Controllers\AuthController::class, 'login'])->name('submit'); // 處理登入表單提交的路由 login.submit
-});
+Route::prefix('00_module_d')->group(function () {
+    // 公開的 routes
+    Route::prefix('login')->name('login.')->group(function () {
+        Route::get('/', [App\Http\Controllers\AuthController::class, 'show'])->name('show'); // 顯示登入頁面的路由 login.show
+        Route::post('/', [App\Http\Controllers\AuthController::class, 'login'])->name('submit'); // 處理登入表單提交的路由 login.submit
+    });
 
-Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout'); // 處理登出功能的路由 logout
+    // 需要登入才能訪問的 routes
+    Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout'); // 處理登出功能的路由 logout
+});
