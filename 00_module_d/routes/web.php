@@ -1,12 +1,14 @@
 <?php
 
-use App\Http\Controllers\BooksController;
+// 添加 AuthCheck middleware 的命名空間
+use App\Http\Middleware\AuthCheck;
 // 添加 AuthController 的命名空間
 use App\Http\Controllers\AuthController;
 // 添加 PublisherController 的命名空間
 use App\Http\Controllers\PublisherController;
-// 添加 AuthCheck middleware 的命名空間
-use App\Http\Middleware\AuthCheck;
+// 添加 BooksController 的命名空間
+use App\Http\Controllers\BookController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,27 +24,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
-
-// Route::get('/books/add', [BooksController::class, 'store']); // 新增書籍的路由
-// Route::get('/books/update', [BooksController::class, 'update']); // 更新書籍的路由
-// Route::get('/books/delete', [BooksController::class, 'destroy']); // 刪除書籍的路由
-// Route::get('/books/list', [BooksController::class, 'index']); // 列出書籍的路由
-
-Route::prefix('00_module_d')->group(function () {
-    Route::prefix('books')->name('books.')->group(function () {
-        Route::get('/', [BooksController::class, 'index'])->name('index'); // 列出所有書籍頁面的路由 books.index
-
-        Route::get('/new', [BooksController::class, 'create'])->name('create'); // 顯示新增書籍表單的路由 books.create
-        Route::post('/', [BooksController::class, 'store'])->name('store'); // 處理新增書籍表單提交的路由 books.store
-
-        Route::get('/{book}/edit', [BooksController::class, 'edit'])->name('edit'); // 顯示編輯書籍表單的路由 books.edit
-        Route::put('/{book}', [BooksController::class, 'update'])->name('update'); // 處理編輯書籍表單提交的路由 books.update
-
-        Route::delete('/{book}', [BooksController::class, 'destroy'])->name('destroy'); // 刪除書籍的路由 books.destroy
-
-        Route::get('/{book:isbn}', [BooksController::class, 'show'])->name('show'); // 顯示單一書籍詳細資訊的路由 books.show
-    });
 });
 
 Route::prefix('00_module_d')->group(function () {
@@ -63,6 +44,14 @@ Route::prefix('00_module_d')->group(function () {
             Route::get('/new', [App\Http\Controllers\PublisherController::class, 'create'])->name('create'); // 顯示新增出版社表單的路由 publishers.create
             Route::post('/', [App\Http\Controllers\PublisherController::class, 'store'])->name('store'); // 處理新增出版社表單提交的路由 publishers.store
             // 後續還可以添加編輯、刪除出版社的路由
+        });
+
+        // 管理書籍的 routes
+        Route::prefix('books')->name('books.')->group(function () {
+            Route::get('/', [App\Http\Controllers\BookController::class, 'index'])->name('index'); // 列出所有書籍的路由 books.index
+            Route::get('/new', [App\Http\Controllers\BookController::class, 'create'])->name('create'); // 顯示新增書籍表單的路由 books.create
+            Route::post('/', [App\Http\Controllers\BookController::class, 'store'])->name('store'); // 處理新增書籍表單提交的路由 books.store
+            // 後續還可以添加編輯、刪除書籍的路由
         });
     });
 });
