@@ -12,7 +12,9 @@ class PublisherController extends Controller
      */
     public function index()
     {
-        //
+        // 從資料庫中取得所有出版社的資料，並傳遞給 view 顯示
+        $publishers = Publisher::all();
+        return view('publishers.index', compact('publishers'));
     }
 
     /**
@@ -20,7 +22,8 @@ class PublisherController extends Controller
      */
     public function create()
     {
-        //
+        // 顯示新增出版社的表單頁面
+        return view('publishers.create');
     }
 
     /**
@@ -28,7 +31,17 @@ class PublisherController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // 新增出版社，儲存到資料庫
+        $publisher = new Publisher();
+        $publisher->name = $request->input('name');
+        $publisher->address = $request->input('address');
+        $publisher->phone = $request->input('phone');
+        $publisher->isbn_code = $request->input('isbn_code');
+        $publisher->is_active = $request->input('is_active') === 'on' ? true : false; // 將 checkbox 的值轉換為布林值
+        $publisher->save();
+
+        // 新增完成後，重定向到出版社列表頁面
+        return redirect()->route('publishers.index');
     }
 
     /**
