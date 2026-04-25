@@ -3,6 +3,8 @@
 use App\Http\Controllers\BooksController;
 // 添加 AuthController 的命名空間
 use App\Http\Controllers\AuthController;
+// 添加 AuthCheck middleware 的命名空間
+use App\Http\Middleware\AuthCheck;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,6 +50,9 @@ Route::prefix('00_module_d')->group(function () {
         Route::post('/', [App\Http\Controllers\AuthController::class, 'login'])->name('submit'); // 處理登入表單提交的路由 login.submit
     });
 
-    // 需要登入才能訪問的 routes
-    Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout'); // 處理登出功能的路由 logout
+    // 使用 middleware 保護需要登入才能訪問的 routes
+    Route::middleware([AuthCheck::class])->group(function () {
+        // 登出
+        Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout'); // 處理登出功能的路由 logout
+    });
 });
