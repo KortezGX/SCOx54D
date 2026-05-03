@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('account')->unique(); // 修改預設的 email 欄位為 account
+            // $table->timestamp('email_verified_at')->nullable(); // 如果不使用 email 驗證，可以移除這行
             $table->string('password');
-            $table->rememberToken();
+            $table->string('role'); // 新增 role 欄位 分為 超級管理員(admin) 和 出版社管理員(manager)
+            // $table->rememberToken(); // 記住我功能，如果不需要可以移除這行
             $table->timestamps();
         });
     }

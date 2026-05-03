@@ -19,8 +19,9 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
+        'account', // 修改預設的 email 欄位為 account
         'password',
+        'role', // 新增 role 欄位
     ];
 
     /**
@@ -39,7 +40,7 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
+        // 'email_verified_at' => 'datetime', // 如果不使用 email 驗證，可以移除這行
+        'password' => 'hashed', // 題目要求密碼加密 因此使用 Laravel 10 的 hashed 屬性
     ];
 }
